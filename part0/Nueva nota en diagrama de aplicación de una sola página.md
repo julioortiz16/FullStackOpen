@@ -34,6 +34,6 @@ sequenceDiagram
     activate browser
     Note right of server: El servidor guarda la nota en data.json
     deactivate server
-    deactivate browser
     Note right of browser: El controlador de eventos crea una nueva nota y la agraga a la lista de notas.
+    deactivate browser
 
