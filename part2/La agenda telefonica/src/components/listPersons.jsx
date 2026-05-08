@@ -1,6 +1,6 @@
-const listPersons = (name) => {
+const listPersons = (name, persons) => {
   const found = persons.find(person => person.name === name)
-  return found ? true : false
+  return Boolean(found)
 }
 
 export default listPersons
