@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Numbers from './components/Numbers'
 import personService from './services/persons'
+import './index.css'
 
 
 const App = () => {
@@ -9,6 +10,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filterText, setFilterText] = useState('')
   const [filtered, setFiltered] = useState(persons)
+  const [notification, setNotification] = useState(null)
 
 // obtener los datos del servidor
   const hook = () => {
@@ -65,6 +67,7 @@ const App = () => {
           setPersons(prevPersons => prevPersons.map(p => p.id !== existingPerson.id ? p : returnedPerson))
           setNewName('')
           setNewNumber('')
+          setNotification(`Added ${returnedPerson.name}`)
         })
       return
     }
@@ -76,6 +79,7 @@ const App = () => {
         setPersons(prevPersons => prevPersons.concat(createdPerson))
         setNewName('')
         setNewNumber('')
+        setNotification(`Added ${createdPerson.name}`)
       })
   }
 
@@ -87,17 +91,30 @@ const App = () => {
     }
   }
 
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+
+    return (
+      <div className="notification">
+        {message}
+      </div>
+    )
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification} />
       <p>filter shown with: <input value={filterText} onChange={(event) => {
           setFilterText(event.target.value)
       }} /></p>
       <h2>add a new</h2>
       {/* manejar el submit del formulario para agregar una nueva persona, también manejar el cambio en los inputs para actualizar el estado de newName y newNumber */}
-      <form onSubmit={addPerson} onChange={handleInputChange}>
-        <div>name: <input name="name" value={newName} /></div>
-        <div>number: <input name="number" value={newNumber} /></div>
+      <form onSubmit={addPerson}>
+        <div>name: <input name="name" value={newName} onChange={handleInputChange} /></div>
+        <div>number: <input name="number" value={newNumber} onChange={handleInputChange} /></div>
         <div><button type="submit">add</button></div>
       </form>
       <h2>Numbers</h2>

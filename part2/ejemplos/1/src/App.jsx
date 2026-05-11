@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Note from './components/Note'
+import './index.css'
 
 
 const App = (props) => {
@@ -8,6 +9,8 @@ const App = (props) => {
     'a new note...'
   )
   const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
+
 
   const addNote = (event) => {
     event.preventDefault()
@@ -21,6 +24,17 @@ const App = (props) => {
     setNewNote('')
   }
 
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+
+    return (<div className="error">
+        {message}
+      </div>
+    )
+  }
+  
   const handleNoteChange = (event) => {
     console.log(event.target.value)
     setNewNote(event.target.value)
@@ -29,6 +43,8 @@ const App = (props) => {
   const notesToShow = showAll
     ? notes
     : notes.filter(note => note.important === true)
+
+
 
   return (
     <div>
@@ -45,6 +61,7 @@ const App = (props) => {
       <button onClick={() => setShowAll(!showAll)}>
         {showAll ? 'Show important' : 'Show all'}
       </button>
+      <Notification message={errorMessage} />
     </div>
   )
 }
