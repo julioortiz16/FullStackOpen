@@ -8,6 +8,10 @@ const getAll = () => {
 
 const create = newObject => {
   return axios.post(baseUrl, newObject).then(response => response.data)
+    .catch(error => {
+      console.log(error.response.data)
+      alert(error.response.data.error)
+    })
 }
 
 const deletePerson = id => {

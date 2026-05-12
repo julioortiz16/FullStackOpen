@@ -1,13 +1,19 @@
 import { useState, useEffect} from 'react'
 import axios from 'axios'
 import Note from './components/Note'
+<<<<<<< HEAD
 import noteService from './services/notes'
+=======
+import './index.css'
+>>>>>>> 3e8c137b288d27b961bdc0ba76eb3161892befbb
 
 
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
+
 
   // obtener las notas del servidor
   useEffect(() => {
@@ -31,6 +37,7 @@ const App = () => {
     }
     setNewNote('')
 
+<<<<<<< HEAD
     noteService
       .create(noteObject)
       .then(createdNote => {
@@ -38,6 +45,19 @@ const App = () => {
       })
   }
   // manejar el cambio en el input
+=======
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null
+    }
+
+    return (<div className="error">
+        {message}
+      </div>
+    )
+  }
+  
+>>>>>>> 3e8c137b288d27b961bdc0ba76eb3161892befbb
   const handleNoteChange = (event) => {
     console.log(event.target.value)
     setNewNote(event.target.value)
@@ -71,6 +91,8 @@ const App = () => {
     ? notes
     : notes.filter(note => note.important === true)
 
+
+
   return (
     <div>
       <h1>Notes</h1>
@@ -91,6 +113,7 @@ const App = () => {
       <button onClick={() => setShowAll(!showAll)}>
         {showAll ? 'Show important' : 'Show all'}
       </button>
+      <Notification message={errorMessage} />
     </div>
   )
 }
